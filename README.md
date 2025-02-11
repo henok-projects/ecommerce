@@ -1,27 +1,56 @@
-# EcommerceFrontend
+1. ng new ecommerce-frontend
+2. cd ecommerce-frontend
+3. ng add @angular/material
+   Step 2: Folder Structure
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.1.
+Step 3: Implement Core Module
 
-## Development server
+1. Generate the core module:
+   ng g m core
+2. Create an AuthInterceptor for JWT authentication:
+   ng g interceptor core/interceptors/auth
+   Implement the AuthInterceptor:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Step 4: Run the Tests
 
-## Code scaffolding
+1. Install Jest and Angular testing utilities:
+   npm install --save-dev jest @types/jest jest-preset-angular
+   npm install --save-dev @angular-builders/jest jest jest-preset-angular
+   npm install --save-dev @types/jest
+   Update angular.json to use Jest:
+   "test": {
+   "builder": "@angular-devkit/build-angular:karma",
+   "options": {
+   "main": "src/test.ts",
+   "polyfills": "src/polyfills.ts",
+   "tsConfig": "tsconfig.spec.json",
+   "karmaConfig": "karma.conf.js",
+   "scripts": [],
+   "styles": [],
+   "assets": []
+   }
+   }
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Replace the test section with:
+   "test": {
+   "builder": "@angular-builders/jest:run",
+   "options": {
+   "configPath": "./jest.config.js"
+   }
+   }
+1. Create a jest.config.js file:
+   module.exports = {
+   preset: 'jest-preset-angular',
+   setupFilesAfterEnv: ['<rootDir>/setup-jest.ts'],
+   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
+   globals: {
+   'ts-jest': {
+   tsconfig: '<rootDir>/tsconfig.spec.json',
+   },
+   },
+   };
+1. Create a setup-jest.ts file:
+   import 'jest-preset-angular';
+   import './jest-global-mocks';
+1. Run the tests:
+   npm test
